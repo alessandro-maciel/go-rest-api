@@ -25,3 +25,12 @@ func PersonalityShow(w http.ResponseWriter, r *http.Request) {
 
 	json.NewEncoder(w).Encode(personality)
 }
+
+func PersonalityStore(w http.ResponseWriter, r *http.Request) {
+	var personality models.Personality
+
+	json.NewDecoder(r.Body).Decode(&personality)
+	database.Db.Create(&personality)
+
+	json.NewEncoder(w).Encode(personality)
+}
