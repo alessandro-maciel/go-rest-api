@@ -16,16 +16,6 @@ func PersonalityIndex(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(personalities)
 }
 
-func PersonalityShow(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id := vars["id"]
-
-	var personality models.Personality
-	database.Db.First(&personality, id)
-
-	json.NewEncoder(w).Encode(personality)
-}
-
 func PersonalityStore(w http.ResponseWriter, r *http.Request) {
 	var personality models.Personality
 
@@ -35,12 +25,12 @@ func PersonalityStore(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(personality)
 }
 
-func PersonalityDelete(w http.ResponseWriter, r *http.Request) {
+func PersonalityShow(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 
 	var personality models.Personality
-	database.Db.Delete(&personality, id)
+	database.Db.First(&personality, id)
 
 	json.NewEncoder(w).Encode(personality)
 }
@@ -54,6 +44,16 @@ func PersonalityUpdate(w http.ResponseWriter, r *http.Request) {
 
 	json.NewDecoder(r.Body).Decode(&personality)
 	database.Db.Save(&personality)
+
+	json.NewEncoder(w).Encode(personality)
+}
+
+func PersonalityDelete(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+
+	var personality models.Personality
+	database.Db.Delete(&personality, id)
 
 	json.NewEncoder(w).Encode(personality)
 }
