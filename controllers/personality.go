@@ -34,3 +34,13 @@ func PersonalityStore(w http.ResponseWriter, r *http.Request) {
 
 	json.NewEncoder(w).Encode(personality)
 }
+
+func PersonalityDelete(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+
+	var personality models.Personality
+	database.Db.Delete(&personality, id)
+
+	json.NewEncoder(w).Encode(personality)
+}
